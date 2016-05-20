@@ -21,9 +21,6 @@ class LinkedList {
 		System.out.println();
 	}
 
-
-
-
 	public void reverseI() {
 		Node current = head;
 		Node next = null;
@@ -40,7 +37,6 @@ class LinkedList {
 		head = previous;
 
 	}
-
 
 	public Node reverseR(Node input) {
 
