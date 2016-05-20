@@ -19,10 +19,14 @@ class ModifiedBinarySearch {
 			return -1;
 		}
 
-		int mid = (first + last)/2;
-		if (first < mid && arr[mid] < arr[first]) {
+		if (first == last) {
 			return first;
-		} else if (last > mid && arr[mid] > arr[last]){
+		}
+
+		int mid = (first + last)/2;
+		if (first < mid && arr[mid] < arr[mid-1]) {
+			return mid-1;
+		} else if (last > mid && arr[mid] > arr[mid+1]){
 			return mid;
 		} else if (arr[first] < arr[mid]) {
 			return getPivot(arr, mid+1, last);
@@ -31,8 +35,34 @@ class ModifiedBinarySearch {
 		}
 	}
 
+	public static boolean doMBS(int arr[], int low, int high, int key) {
+		int pivot = getPivot(arr, low, high);
+		if (pivot == -1) {
+			return doOrdinaryBinarySearch(arr, low, high, key);
+		}
+
+		if (arr[pivot] == key) {
+			return true;
+		}
+
+		if (key >= arr[low]) {
+			return doOrdinaryBinarySearch(arr, low, pivot-1, key);
+		} else {
+			return doOrdinaryBinarySearch(arr, pivot+1, high, key);
+		}
+	}
+
+
 	public static void main(String[] args) {
 		int arr[] = {2,3,4,5,6,7,8,1};
-		System.out.println(getPivot(arr, 0, arr.length - 1));
+		//int arr[] = {4,5,6,7,1,2,3};
+//		int arr[] = {7,6,5,4,3,2,1};
+		//int arr[] = {1,2,3,4,5,6,7};
+		if (doMBS(arr, 0, arr.length - 1, 1)) {
+			System.out.println("found");
+		} else {
+			System.out.println("not found");
+		}
+		//System.out.println(getPivot(arr, 0, arr.length - 1));
 	}
 }
